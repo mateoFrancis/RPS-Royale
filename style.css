@@ -122,3 +122,37 @@ html, body{
   .panel{ padding:16px; }
 }
 
+
+
+.match-controls {
+  display: flex;
+  justify-content: center;
+  margin: 1rem 0;          
+}
+
+#join-match-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: none;
+  border-radius: 50px;
+  padding: 10px 20px;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.25);
+  transition: transform 0.08s ease, box-shadow 0.15s ease, background 0.15s ease, filter 0.15s ease;
+
+  /* Gradient with blue and gold */
+  background: linear-gradient(45deg, var(--blue-662), var(--gold-123));
+  color: #fff; /* text color */
+}
+
+#join-match-btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.05);
+}
+
+#join-match-btn:active {
+  transform: scale(0.97);
+}

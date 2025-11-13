@@ -10,8 +10,7 @@
   <!-- libs BEFORE your app script -->
   <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-
-  <script src="./script.js?v=6" defer></script>
+  
 </head>
 
 <body>
@@ -53,11 +52,20 @@
     </section>
   </main>
 
+<div class="match-controls">
+  <button id="join-match-btn">Enter Match</button>
+</div>
+
   <!-- Client log -->
   <footer class="console">
     <div class="console-header">Client Console</div>
     <pre id="client-log" class="console-body"></pre>
   </footer>
+
+  <script src="./events.js?v=1" defer></script>
+  <script src="./script.js?v=6" defer></script>
+
+
 </body>
 </html>
 
