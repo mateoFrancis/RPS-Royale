@@ -1,5 +1,161 @@
-
-
-#hi {
-    
+/* ===== CSUB Colors ===== */
+:root{
+  --blue-661: #003594;  /* Pantone 661 */
+  --blue-662: #001A70;  /* Pantone 662 */
+  --gold-123: #FFC72C;  /* Pantone 123 */
+  --gray-424: #707372;  /* Pantone 424 */
 }
+
+/* Page background = CSUB blue → gold gradient */
+html, body{
+  height: 100%;
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  background: linear-gradient(135deg, var(--blue-662) 0%, var(--blue-661) 45%, var(--gold-123) 100%);
+  color: #fff;
+}
+
+/* Header */
+.site-header{
+  text-align:center;
+  padding: 18px 12px 6px;
+  text-shadow: 0 2px 6px rgba(0,0,0,.35);
+}
+.site-header h1{ margin:0; font-size: 36px; letter-spacing:.5px; }
+.site-header p{ margin:6px 0 0; font-weight:600; }
+
+/* Split board */
+.board{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  width: min(1200px, 96%);
+  height: 65vh;
+  margin: 14px auto;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0,0,0,.35);
+  border: 1px solid rgba(255,255,255,.2);
+  background: rgba(0,0,0,.1);
+  backdrop-filter: blur(2px);
+}
+
+/* Panels */
+.panel{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding: 22px;
+}
+.panel.left  { background: rgba(0, 26, 112, 0.92); }
+.panel.right { background: rgba(255, 199, 44, 0.92); color:#101010; }
+
+/* Inner card */
+.panel-inner{
+  width: min(560px, 92%);
+  background: rgba(255,255,255,.14);
+  border: 1px solid rgba(255,255,255,.20);
+  border-radius: 14px;
+  padding: 22px 18px;
+  backdrop-filter: blur(3px);
+  color: #fff;
+}
+.panel.right .panel-inner{
+  background: rgba(255,255,255,.35);
+  border-color: rgba(0,0,0,.12);
+  color:#111;
+}
+
+.panel h2{
+  margin: 0 0 14px;
+  font-size: 26px;
+  letter-spacing:.3px;
+}
+
+/* Buttons */
+.buttons{
+  display:flex;
+  flex-wrap: wrap;
+  gap:10px;
+  margin-bottom: 10px;
+}
+
+/* Player 1 buttons (gold) */
+.move-btn.blue{
+  background: var(--gold-123);
+  color: #001A70;
+  font-weight: 800;
+  border: none;
+  border-radius: 50px; /* round shape */
+  padding: 10px 20px;
+  cursor: pointer;
+  box-shadow: 0 6px 14px rgba(0,0,0,.25);
+  transition: transform .08s ease, box-shadow .15s ease, background .15s ease;
+}
+.move-btn.blue:hover{
+  transform: translateY(-2px);
+  background: #f9d85a;
+  box-shadow: 0 8px 18px rgba(0,0,0,.25);
+}
+.move-btn.blue:active{
+  transform: scale(0.97);
+}
+
+/* Player 2 buttons (blue) */
+.move-btn.gold{
+  background: var(--blue-662);
+  color: #fff;
+  font-weight: 800;
+  border: none;
+  border-radius: 50px;
+  padding: 10px 20px;
+  cursor: pointer;
+  box-shadow: 0 6px 14px rgba(0,0,0,.25);
+  transition: transform .08s ease, box-shadow .15s ease, background .15s ease;
+}
+.move-btn.gold:hover{
+  transform: translateY(-2px);
+  background: var(--blue-661);
+  box-shadow: 0 8px 18px rgba(0,0,0,.25);
+}
+.move-btn.gold:active{
+  transform: scale(0.97);
+}
+
+/* Status */
+.status{ font-size: 15px; }
+.status span{ opacity:.85; }
+.status strong{ margin-left:6px; text-transform: uppercase; }
+
+/* Client console */
+.console{
+  width: min(1200px, 96%);
+  margin: 16px auto 28px;
+  background: rgba(255,255,255,.95);
+  color:#111;
+  border: 1px solid rgba(0,0,0,.12);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0,0,0,.18);
+}
+.console-header{
+  background: var(--gray-424);
+  color:#fff;
+  font-weight:700;
+  padding:8px 12px;
+  font-size: 14px;
+}
+.console-body{
+  margin:0;
+  padding: 10px 12px;
+  height:120px;
+  overflow:auto;
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: 13px;
+}
+
+/* Mobile layout */
+@media (max-width: 860px){
+  .board{ grid-template-columns: 1fr; height: auto; }
+  .panel{ padding: 16px; }
+}
+
