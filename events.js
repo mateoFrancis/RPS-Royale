@@ -4,6 +4,19 @@ const socket = io("http://localhost:8000", { transports: ["websocket"] });
 // both assigned by server
 let playerNumber = null;
 let room = null;
+let gameMode = null;
+
+
+fetch("/api/mode")
+  .then(res => res.json())
+  .then(cfg => {
+
+    window.gameMode = cfg.mode; 
+    window.username = cfg.username;
+    console.log("Game mode loaded:", window.gameMode);
+  })
+  .catch(err => console.error("Failed to fetch game mode:", err));
+
 
 // move buttons
 $(document).on("click", ".move-btn", function () {
@@ -29,13 +42,15 @@ $(document).on("click", ".move-btn", function () {
 });
 
 // join match button
+
+/*
 $(document).on("click", "#join-match-btn", function () {
 
     console.log("Joining match queue...");
 
     socket.emit("join_match");  // tells server the player is ready
 });
-
+*/
 
 
 /*** server/client events ***/
@@ -43,22 +58,55 @@ $(document).on("click", "#join-match-btn", function () {
 // comfirms connection
 socket.on("connect", () => {
 
-    console.log(`Connected! Socket ID: ${socket.id}`);    
+  console.log(`Connected! Socket ID: ${socket.id}`);
+
+  const interval = setInterval(() => {
+
+    if (window.gameMode && window.username) {
+
+      socket.emit("join_queue", { mode: window.gameMode });
+      clearInterval(interval);
+
+      $("#panel-p1 h2").text(window.username);
+      $("#panel-p2 h2").text("Waiting for Player 2...");
+    }
+
+  }, 50);
 });
 
 // disconnects
-socket.on("disconnect", (reason) => {
+socket.on("disconnect", () => {
 
-  console.log(`Disconnected`);
+    console.log("Disconnected, returning to home page.");
+
+    // Optional alert
+    alert("Connection lost. Returning to home page.");
+    window.location.href = "/";
 });
 
 // match found
 socket.on("match_start", (data) => {
 
-  playerNumber = data.player_number;
-  room = data.room;
+    playerNumber = data.player_number; // 1 or 2
+    room = data.room;
 
-  console.log(`Match found! You are Player ${playerNumber} in room ${room}`);
+    console.log(`Match found! You are Player ${playerNumber} in room ${room}`);
+
+    if (playerNumber === 1) {
+
+        $("#panel-p1 h2").text(window.username);
+        $("#panel-p2 h2").text(data.opponent_username);
+    } 
+    else if (playerNumber === 2) {
+
+        $("#panel-p2 h2").text(window.username);
+        $("#panel-p1 h2").text(data.opponent_username);
+    }
+
+    // change board to show match was found
+    $(".board").css("border", "5px solid yellow");
+
+    $("#client-log").append(`\nMatch found! Room: ${room}, you are player ${playerNumber}`);
 });
 
 
