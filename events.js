@@ -1,5 +1,7 @@
 
+
 const socket = io("http://localhost:8000", { transports: ["websocket"] });
+//const socket = io("http://10.55.8.120:8000", { transports: ["websocket"] });
 
 // both assigned by server
 let playerNumber = null;
@@ -69,6 +71,7 @@ socket.on("connect", () => {
 
       $("#panel-p1 h2").text(window.username);
       $("#panel-p2 h2").text("Waiting for Player 2...");
+
     }
 
   }, 50);
