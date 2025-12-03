@@ -1,12 +1,15 @@
 
 
-const socket = io("http://localhost:8000", { transports: ["websocket"] });
+//const socket = io("http://localhost:8000", { transports: ["websocket"] });
 //const socket = io("http://10.55.8.120:8000", { transports: ["websocket"] });
+const socket = io("http://192.168.1.122:8000", { transports: ["websocket"] });
+
 
 // both assigned by server
 let playerNumber = null;
 let room = null;
 let gameMode = null;
+let hasChosen = false;
 
 
 fetch("/api/mode")
@@ -20,17 +23,25 @@ fetch("/api/mode")
   .catch(err => console.error("Failed to fetch game mode:", err));
 
 
+
 // move buttons
 $(document).on("click", ".move-btn", function () {
 
     if (!playerNumber || !room) {
-
         console.log("Waiting for a match");
+        return;
+    }
+
+    if (hasChosen) {
+        console.log("You already made your choice this round!");
         return;
     }
 
     let $btn = $(this);
     let move =  $btn.data("move"); // rock, paper, scissors, etc.
+
+    // disable buttons immediately to prevent spamming
+    $(".move-btn").prop("disabled", true);
 
     // send to server
     socket.emit("player_move", {
@@ -40,8 +51,9 @@ $(document).on("click", ".move-btn", function () {
     });
 
     $(`#last-p${playerNumber}`).text(move.toUpperCase()); // player's last choice
-    //console.log(`You chose ${move}`);
+    hasChosen = true;
 });
+
 
 // join match button
 
@@ -66,7 +78,7 @@ socket.on("connect", () => {
 
     if (window.gameMode && window.username) {
 
-      socket.emit("join_queue", { mode: window.gameMode });
+      socket.emit("join_queue", { mode: window.gameMode, username: window.username });
       clearInterval(interval);
 
       $("#panel-p1 h2").text(window.username);
@@ -126,7 +138,32 @@ socket.on("opponent_move", (data) => {
 
 socket.on("round_result", (data) => {
 
-  let {winner, move_p1, move_p2} = data;
+    let {winner, move_p1, move_p2} = data;
 
-  console.log(`Round result: Player 1 chose ${move_p1}, Player 2 chose ${move_p2}. Winner: ${winner}`);
+    console.log(`Round result: Player 1 chose ${move_p1}, Player 2 chose ${move_p2}. Winner: ${winner}`);
+
+    // reset buttons for next round
+    $(".move-btn").prop("disabled", false);
+    hasChosen = false;
+});
+
+socket.on("redirect_loser", (data) => {
+
+    console.log("You lost the match, returning to home page.");
+    window.location.href = data.url;
+});
+
+
+socket.on("winner_waiting", (data) => {
+
+    $(".board").css("border", "2px solid gray"); // reset board highlight
+    $(".move-btn").prop("disabled", false);
+
+    hasChosen = false;
+});
+
+socket.on("tournament_finished", (data) => {
+
+    alert(`Tournament finished! Winner SID: ${data.winner}`);
+    window.location.href = "/"; // back to home page or redirect to a results page
 });
