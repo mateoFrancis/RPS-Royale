@@ -2,8 +2,8 @@
 
 //const socket = io("http://localhost:8000", { transports: ["websocket"] });
 //const socket = io("http://10.55.8.120:8000", { transports: ["websocket"] });
-//const socket = io("http://192.168.1.122:8000", { transports: ["websocket"] });
-const socket = io("http://192.168.0.178:8000", { transports: ["websocket"] });
+const socket = io("http://192.168.1.122:8000", { transports: ["websocket"] });
+//const socket = io("http://192.168.0.178:8000", { transports: ["websocket"] });
 
 
 // both assigned by server
@@ -83,7 +83,7 @@ socket.on("connect", () => {
       clearInterval(interval);
 
       $("#panel-p1 h2").text(window.username);
-      $("#panel-p2 h2").text("Waiting for Player 2...");
+      $("#panel-p2 h2").text("Waiting for Player...");
 
     }
 
@@ -161,6 +161,18 @@ socket.on("winner_waiting", (data) => {
     $(".move-btn").prop("disabled", false);
 
     hasChosen = false;
+
+        if (window.gameMode === "tournament") {
+
+            if (playerNumber === 1) {
+
+                $("#panel-p2 h2").text("Waiting for Player...");
+            } 
+            else if (playerNumber === 2) {
+
+                $("#panel-p1 h2").text("Waiting for Player...");
+            }
+    }
 });
 
 socket.on("tournament_finished", (data) => {
