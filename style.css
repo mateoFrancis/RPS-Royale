@@ -33,6 +33,13 @@ html, body{
 .panel.left{  background: rgba(0,26,112,.92); }
 .panel.right{ background: rgba(255,199,44,.92); color:#101010; }
 
+/* Highlight for the active player's side */
+.panel.panel-active .panel-inner{
+  box-shadow:0 0 0 3px rgba(255,199,44,.95), 0 18px 40px rgba(0,0,0,.65);
+  transform: translateY(-4px);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+
 /* Inner card */
 .panel-inner{
   width:min(560px,92%);
@@ -56,6 +63,20 @@ html, body{
 }
 .move-btn .icon{ font-size:1.05rem; line-height:1; }
 
+/* Tooltip bubble that follows the mouse (match page only) */
+.move-tooltip{
+  position: absolute;
+  background: rgba(0,0,0,0.85);
+  color:#fff;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Button color themes */
 .move-btn.blue{ background: var(--gold-123); color:#001A70; }
 .move-btn.blue:hover{ transform: translateY(-2px); filter: brightness(1.05); }
 .move-btn.blue:active{ transform: scale(.97); }
@@ -116,13 +137,96 @@ html, body{
   font-family: ui-monospace, Menlo, Consolas, monospace; font-size:13px;
 }
 
+/* ========================= */
+/* Match result overlay      */
+/* ========================= */
+
+.result-overlay{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.result-overlay.show{
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.result-content{
+  position: relative;
+  background: rgba(5,10,40,0.95);
+  padding: 28px 36px;
+  border-radius: 20px;
+  text-align: center;
+  max-width: 420px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+  border: 2px solid rgba(255,255,255,0.3);
+}
+
+.result-content h2{
+  margin: 0 0 10px;
+  font-size: 32px;
+  letter-spacing: 1px;
+}
+
+.result-content p{
+  margin: 0 0 14px;
+  font-size: 18px;
+}
+
+.result-countdown{
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.result-countdown span{
+  font-weight: 700;
+}
+
+/* emoji/confetti rain inside overlay */
+.result-rain{
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.rain-emoji{
+  position: absolute;
+  top: -10vh;
+  font-size: 28px;
+  animation-name: emoji-fall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes emoji-fall{
+  0%{
+    transform: translateY(-10vh) rotate(0deg);
+    opacity: 0;
+  }
+  10%{
+    opacity: 1;
+  }
+  100%{
+    transform: translateY(110vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
 /* Mobile */
 @media (max-width: 860px){
   .board{ grid-template-columns:1fr; height:auto; }
   .panel{ padding:16px; }
 }
-
-
 
 .match-controls {
   display: flex;
@@ -156,8 +260,6 @@ html, body{
 #join-match-btn:active {
   transform: scale(0.97);
 }
-
-
 
 /* Home Page Container */
 
@@ -233,3 +335,4 @@ html, body{
 .main-btn:active {
   transform: scale(0.97);
 }
+

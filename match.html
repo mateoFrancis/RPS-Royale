@@ -26,13 +26,54 @@
       <div class="panel-inner">
         <h2>Player 1</h2>
         <div class="buttons">
-          <button class="move-btn blue" data-player="p1" data-move="rock"><span class="icon">🪨</span>Rock</button>
-          <button class="move-btn blue" data-player="p1" data-move="paper"><span class="icon">📄</span>Paper</button>
-          <button class="move-btn blue" data-player="p1" data-move="scissors"><span class="icon">✂️</span>Scissors</button>
-          <button class="move-btn blue" data-player="p1" data-move="lizard"><span class="icon">🦎</span>Lizard</button>
-          <button class="move-btn blue" data-player="p1" data-move="spock"><span class="icon">🖖</span>Spock</button>
+          <button
+            class="move-btn blue"
+            data-player="p1"
+            data-move="rock"
+            data-tooltip="Rock beats Scissors and Lizard"
+          >
+            <span class="icon">🪨</span>Rock
+          </button>
+
+          <button
+            class="move-btn blue"
+            data-player="p1"
+            data-move="paper"
+            data-tooltip="Paper beats Rock and Spock"
+          >
+            <span class="icon">📄</span>Paper
+          </button>
+
+          <button
+            class="move-btn blue"
+            data-player="p1"
+            data-move="scissors"
+            data-tooltip="Scissors beat Paper and Lizard"
+          >
+            <span class="icon">✂️</span>Scissors
+          </button>
+
+          <button
+            class="move-btn blue"
+            data-player="p1"
+            data-move="lizard"
+            data-tooltip="Lizard beats Spock and Paper"
+          >
+            <span class="icon">🦎</span>Lizard
+          </button>
+
+          <button
+            class="move-btn blue"
+            data-player="p1"
+            data-move="spock"
+            data-tooltip="Spock beats Scissors and Rock"
+          >
+            <span class="icon">🖖</span>Spock
+          </button>
         </div>
-        <div class="status"><span>Last Choice:</span> <strong id="last-p1">—</strong></div>
+        <div class="status">
+          <span>Last Choice:</span> <strong id="last-p1">—</strong>
+        </div>
       </div>
     </section>
 
@@ -41,13 +82,54 @@
       <div class="panel-inner">
         <h2>Player 2</h2>
         <div class="buttons">
-          <button class="move-btn gold" data-player="p2" data-move="rock"><span class="icon">🪨</span>Rock</button>
-          <button class="move-btn gold" data-player="p2" data-move="paper"><span class="icon">📄</span>Paper</button>
-          <button class="move-btn gold" data-player="p2" data-move="scissors"><span class="icon">✂️</span>Scissors</button>
-          <button class="move-btn gold" data-player="p2" data-move="lizard"><span class="icon">🦎</span>Lizard</button>
-          <button class="move-btn gold" data-player="p2" data-move="spock"><span class="icon">🖖</span>Spock</button>
+          <button
+            class="move-btn gold"
+            data-player="p2"
+            data-move="rock"
+            data-tooltip="Rock beats Scissors and Lizard"
+          >
+            <span class="icon">🪨</span>Rock
+          </button>
+
+          <button
+            class="move-btn gold"
+            data-player="p2"
+            data-move="paper"
+            data-tooltip="Paper beats Rock and Spock"
+          >
+            <span class="icon">📄</span>Paper
+          </button>
+
+          <button
+            class="move-btn gold"
+            data-player="p2"
+            data-move="scissors"
+            data-tooltip="Scissors beat Paper and Lizard"
+          >
+            <span class="icon">✂️</span>Scissors
+          </button>
+
+          <button
+            class="move-btn gold"
+            data-player="p2"
+            data-move="lizard"
+            data-tooltip="Lizard beats Spock and Paper"
+          >
+            <span class="icon">🦎</span>Lizard
+          </button>
+
+          <button
+            class="move-btn gold"
+            data-player="p2"
+            data-move="spock"
+            data-tooltip="Spock beats Scissors and Rock"
+          >
+            <span class="icon">🖖</span>Spock
+          </button>
         </div>
-        <div class="status"><span>Last Choice:</span> <strong id="last-p2">—</strong></div>
+        <div class="status">
+          <span>Last Choice:</span> <strong id="last-p2">—</strong>
+        </div>
       </div>
     </section>
   </main>
@@ -58,10 +140,20 @@
     <pre id="client-log" class="console-body"></pre>
   </footer>
 
+  <!-- Result overlay for winner/loser -->
+  <div id="result-overlay" class="result-overlay">
+    <div id="result-rain" class="result-rain"></div>
+    <div class="result-content">
+      <h2 id="result-title"></h2>
+      <p id="result-subtitle"></p>
+      <div class="result-countdown">
+        Next step in <span id="result-count">5</span>...
+      </div>
+    </div>
+  </div>
+
   <script src="./events.js?v=1" defer></script>
   <script src="./script.js?v=6" defer></script>
-
-
 </body>
 </html>
 

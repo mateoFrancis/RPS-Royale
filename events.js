@@ -1,8 +1,8 @@
 
 
-//const socket = io("http://localhost:8000", { transports: ["websocket"] });
+const socket = io("http://localhost:8000", { transports: ["websocket"] });
 //const socket = io("http://10.55.8.120:8000", { transports: ["websocket"] });
-const socket = io("http://192.168.1.122:8000", { transports: ["websocket"] });
+//const socket = io("http://192.168.1.122:8000", { transports: ["websocket"] });
 
 
 // both assigned by server
