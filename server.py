@@ -50,6 +50,10 @@ def match_making():
             "opponent_username": usernames.get(p1, "Player 1")
         }, to=p2)
 
+def try_matchmaking():
+    if len(match_queue) >= 2:
+        match_making
+
 def tournament_making():
     
     if len(tournament_queue) < 6:
@@ -146,8 +150,17 @@ def advance_tournament():
             "opponent_username": usernames.get(p1)
         }, to=p2)
 
+def tournament_is_finished():
+    return len(tournament_queue) == 0 and len(next_round_queue) <= 1
 
+def get_final_winner():
+    return next_round_queue[0] if next_round_queue else None
 
+def reset_tournament_state():
+    tournament_queue.clear()
+    next_round_queue.clear()
+    rooms.clear()
+    
 # serve index.html
 @app.route('/')
 def index():
