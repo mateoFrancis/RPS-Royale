@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RPS Royale</title>
 
-  <link rel="stylesheet" href="./style.css?v=7" />
+  <link rel="stylesheet" href="./style.css?v=8" />
 
   <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 
@@ -27,11 +25,61 @@
       placeholder="Enter username"
     />
 
+    <!-- Rules section so mobile users can see how each move works -->
+    <section class="rules-wrapper" aria-label="Game rules">
+      <h2 class="rules-title">Rules</h2>
+      <p class="rules-subtitle">
+        Each move beats two others. Matches are best of three rounds (first to 2 wins).
+      </p>
+
+      <div class="rules-grid">
+        <div class="rule-card">
+          <span class="rule-icon">🪨</span>
+          <div class="rule-text">
+            <strong>Rock</strong>
+            <span>crushes Scissors &amp; Lizard</span>
+          </div>
+        </div>
+
+        <div class="rule-card">
+          <span class="rule-icon">📄</span>
+          <div class="rule-text">
+            <strong>Paper</strong>
+            <span>covers Rock &amp; disproves Spock</span>
+          </div>
+        </div>
+
+        <div class="rule-card">
+          <span class="rule-icon">✂️</span>
+          <div class="rule-text">
+            <strong>Scissors</strong>
+            <span>cut Paper &amp; decapitate Lizard</span>
+          </div>
+        </div>
+
+        <div class="rule-card">
+          <span class="rule-icon">🦎</span>
+          <div class="rule-text">
+            <strong>Lizard</strong>
+            <span>poisons Spock &amp; eats Paper</span>
+          </div>
+        </div>
+
+        <div class="rule-card">
+          <span class="rule-icon">🖖</span>
+          <div class="rule-text">
+            <strong>Spock</strong>
+            <span>smashes Scissors &amp; vaporizes Rock</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <button id="enter-match" class="main-btn">Enter Match</button>
     <button id="enter-tournament" class="main-btn">Enter Tournament</button>
   </div>
 
-
-    <script src="./home.js" defer></script>
+  <script src="./home.js" defer></script>
 </body>
 </html>
+

@@ -1,4 +1,4 @@
-// Emits socket events, updates "Last Choice", and spawns a flying token
+// Emits socket events, updates score, and spawns a flying token
 $(function () {
   // We use the global `socket` created in events.js
 
@@ -46,11 +46,7 @@ $(function () {
     const player = $(this).data("player"); // "p1" or "p2"
     const move   = $(this).data("move");   // rock|paper|scissors|lizard|spock
 
-    // Update labels
-    $(`#last-${player}`).text(move.toUpperCase());
-
-    // Emit socket event (handled in events.js), left commented on this file
-    // socket.emit("player_move", { player, move });
+    // Just log + visual; actual game logic is in events.js/server
     log(`${player} chose ${move}`);
 
     // Visual: throw a token from the center into the player's panel
@@ -184,6 +180,22 @@ $(function () {
 
   let myPlayerNumber = null; // 1 or 2
 
+  // Global scoreboard for the match (always P1 : P2)
+  let winsP1 = 0;
+  let winsP2 = 0;
+
+  function resetScores() {
+    winsP1 = 0;
+    winsP2 = 0;
+    updateScoreboard();
+  }
+
+  function updateScoreboard() {
+    // All panels show the same P1 : P2 scores
+    $(".score-me").text(winsP1);
+    $(".score-opponent").text(winsP2);
+  }
+
   function applyPlayerHighlight() {
     $(".panel").removeClass("panel-active");
 
@@ -236,16 +248,47 @@ $(function () {
       showResultOverlay("loser");
     });
 
-    // When a match starts, remember which player we are and highlight that side
+    // When a match starts, remember which player we are, highlight side, and reset scores
     socket.on("match_start", (data) => {
       myPlayerNumber = data.player_number; // 1 or 2
+      resetScores();
       applyPlayerHighlight();
       updateButtonAccess();
     });
 
-    // After each round, events.js re-enables buttons; we immediately
-    // re-lock the opponent's side.
-    socket.on("round_result", () => {
+    // After each round: update P1/P2 wins + re-lock opponent side
+    socket.on("round_result", (data) => {
+      if (!data) {
+        updateButtonAccess();
+        return;
+      }
+
+      const winnerSid = data.winner;
+
+      // Tie round – no score change
+      if (!winnerSid) {
+        updateButtonAccess();
+        return;
+      }
+
+      // Determine whether Player 1 or Player 2 won this round
+      let winnerPlayerNum;
+
+      if (winnerSid === socket.id) {
+        // We are the winner: winner is our player number
+        winnerPlayerNum = myPlayerNumber;
+      } else {
+        // Opponent is the winner: winner is the other player number
+        winnerPlayerNum = myPlayerNumber === 1 ? 2 : 1;
+      }
+
+      if (winnerPlayerNum === 1) {
+        winsP1++;
+      } else if (winnerPlayerNum === 2) {
+        winsP2++;
+      }
+
+      updateScoreboard();
       updateButtonAccess();
     });
 
@@ -256,6 +299,33 @@ $(function () {
       applyPlayerHighlight();
       updateButtonAccess();
     });
+  }
+
+  // ===========================
+  // Mode label at top of page
+  // ===========================
+
+  // Use /api/mode to show "Match" or "Tournament" above the board
+  const $modeLabel = $("#mode-label");
+  if ($modeLabel.length) {
+    fetch("/api/mode")
+      .then(res => res.json())
+      .then(cfg => {
+        const mode = cfg.mode || "match";
+        let text = "";
+
+        if (mode === "tournament") {
+          text = "TOURNAMENT MODE";
+        } else {
+          text = "MATCH MODE";
+        }
+
+        $modeLabel.text(text);
+      })
+      .catch(err => {
+        console.error("Failed to load mode for label:", err);
+        $modeLabel.text("MATCH MODE");
+      });
   }
 
 });

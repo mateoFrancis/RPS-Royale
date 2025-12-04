@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>RPS Royale – CSUB</title>
 
-  <link rel="stylesheet" href="./style.css?v=6" />
+  <link rel="stylesheet" href="./style.css?v=8" />
 
   <!-- libs BEFORE your app script -->
   <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
@@ -17,6 +17,11 @@
   <header class="site-header">
     <h1>RPS Royale</h1>
     <p>Rock • Paper • Scissors • Lizard • Spock</p>
+
+    <!-- Centered mode label (Match / Tournament) -->
+    <div class="mode-banner">
+      <span id="mode-label">Loading mode...</span>
+    </div>
   </header>
 
   <!-- Split-screen board -->
@@ -25,54 +30,34 @@
     <section id="panel-p1" class="panel left">
       <div class="panel-inner">
         <h2>Player 1</h2>
+
         <div class="buttons">
-          <button
-            class="move-btn blue"
-            data-player="p1"
-            data-move="rock"
-            data-tooltip="Rock beats Scissors and Lizard"
-          >
+          <button class="move-btn blue" data-player="p1" data-move="rock" data-tooltip="Rock beats Scissors and Lizard">
             <span class="icon">🪨</span>Rock
           </button>
 
-          <button
-            class="move-btn blue"
-            data-player="p1"
-            data-move="paper"
-            data-tooltip="Paper beats Rock and Spock"
-          >
+          <button class="move-btn blue" data-player="p1" data-move="paper" data-tooltip="Paper beats Rock and Spock">
             <span class="icon">📄</span>Paper
           </button>
 
-          <button
-            class="move-btn blue"
-            data-player="p1"
-            data-move="scissors"
-            data-tooltip="Scissors beat Paper and Lizard"
-          >
+          <button class="move-btn blue" data-player="p1" data-move="scissors" data-tooltip="Scissors beat Paper and Lizard">
             <span class="icon">✂️</span>Scissors
           </button>
 
-          <button
-            class="move-btn blue"
-            data-player="p1"
-            data-move="lizard"
-            data-tooltip="Lizard beats Spock and Paper"
-          >
+          <button class="move-btn blue" data-player="p1" data-move="lizard" data-tooltip="Lizard beats Spock and Paper">
             <span class="icon">🦎</span>Lizard
           </button>
 
-          <button
-            class="move-btn blue"
-            data-player="p1"
-            data-move="spock"
-            data-tooltip="Spock beats Scissors and Rock"
-          >
+          <button class="move-btn blue" data-player="p1" data-move="spock" data-tooltip="Spock beats Scissors and Rock">
             <span class="icon">🖖</span>Spock
           </button>
         </div>
+
+        <!-- Scores (You : Opponent) -->
         <div class="status">
-          <span>Last Choice:</span> <strong id="last-p1">—</strong>
+          <span>Scores:</span>
+          <strong class="score-me">0</strong> :
+          <strong class="score-opponent">0</strong>
         </div>
       </div>
     </section>
@@ -81,54 +66,34 @@
     <section id="panel-p2" class="panel right">
       <div class="panel-inner">
         <h2>Player 2</h2>
+
         <div class="buttons">
-          <button
-            class="move-btn gold"
-            data-player="p2"
-            data-move="rock"
-            data-tooltip="Rock beats Scissors and Lizard"
-          >
+          <button class="move-btn gold" data-player="p2" data-move="rock" data-tooltip="Rock beats Scissors and Lizard">
             <span class="icon">🪨</span>Rock
           </button>
 
-          <button
-            class="move-btn gold"
-            data-player="p2"
-            data-move="paper"
-            data-tooltip="Paper beats Rock and Spock"
-          >
+          <button class="move-btn gold" data-player="p2" data-move="paper" data-tooltip="Paper beats Rock and Spock">
             <span class="icon">📄</span>Paper
           </button>
 
-          <button
-            class="move-btn gold"
-            data-player="p2"
-            data-move="scissors"
-            data-tooltip="Scissors beat Paper and Lizard"
-          >
+          <button class="move-btn gold" data-player="p2" data-move="scissors" data-tooltip="Scissors beat Paper and Lizard">
             <span class="icon">✂️</span>Scissors
           </button>
 
-          <button
-            class="move-btn gold"
-            data-player="p2"
-            data-move="lizard"
-            data-tooltip="Lizard beats Spock and Paper"
-          >
+          <button class="move-btn gold" data-player="p2" data-move="lizard" data-tooltip="Lizard beats Spock and Paper">
             <span class="icon">🦎</span>Lizard
           </button>
 
-          <button
-            class="move-btn gold"
-            data-player="p2"
-            data-move="spock"
-            data-tooltip="Spock beats Scissors and Rock"
-          >
+          <button class="move-btn gold" data-player="p2" data-move="spock" data-tooltip="Spock beats Scissors and Rock">
             <span class="icon">🖖</span>Spock
           </button>
         </div>
+
+        <!-- Scores (You : Opponent) -->
         <div class="status">
-          <span>Last Choice:</span> <strong id="last-p2">—</strong>
+          <span>Scores:</span>
+          <strong class="score-me">0</strong> :
+          <strong class="score-opponent">0</strong>
         </div>
       </div>
     </section>
@@ -153,7 +118,7 @@
   </div>
 
   <script src="./events.js?v=1" defer></script>
-  <script src="./script.js?v=6" defer></script>
+  <script src="./script.js?v=7" defer></script>
 </body>
 </html>
 
